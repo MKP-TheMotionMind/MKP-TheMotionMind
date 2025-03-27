@@ -12,7 +12,7 @@ def predict_time(stride_length):
     else:
         stride_array = np.array([[stride_length]]) # Convert to 2D array
         prediction = model.predict(stride_array)[0] # Predict sprint time
-        return f"🏃 Predicted Sprint Time: {prediction:.2f} minutes"
+        return f"🏃 Predicted Sprint Time: {prediction:.2f} sec"
 
 # Streamlit UI
 st.title("StrideX AI: Sprint Time Predictor")
