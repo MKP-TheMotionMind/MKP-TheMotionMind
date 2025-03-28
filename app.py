@@ -20,27 +20,28 @@ def predict_time(stride_length):
 st.title("StrideX AI: Sprint Time Predictor")
 st.markdown("Made by Prabhakar Manikantan : The_MotionMind")
 
-# 1. Use st.form + session_state (key for mobile stability)
-with st.form("mobile_friendly_form"):
+# ====== CHANGE STARTS HERE ======
+with st.form("prediction_form"):
+    # Modified input field - now always starts fresh at 1.0
     stride_length = st.number_input(
         "Enter Stride Length (meters):",
         min_value=1.0,
         max_value=3.0,
         step=0.01,
-        value=st.session_state.get("last_input", 1.0), # Remembers last input
-        key="mobile_input"
+        value=1.0, # Always reset to 1.0 instead of remembering last input
+        key="stride_input"
     )
     
     if st.form_submit_button("Predict"):
-        st.session_state.last_input = stride_length # Save for next run
         result = predict_time(stride_length)
-        st.session_state.last_result = result # Store result
+        st.session_state.last_result = result # Store ONLY the result
 
-# 2. Display result OUTSIDE form (avoids mobile refresh)
+# Display result outside form
 if "last_result" in st.session_state:
     st.write(st.session_state.last_result)
+# ====== CHANGE ENDS HERE ======
 
-# 3. Mobile-specific optimizations
+# (Keep your existing mobile CSS)
 st.markdown("""
 <style>
 /* Prevent mobile zoom-in on input */
@@ -49,6 +50,7 @@ input[type="number"] {
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 
 
